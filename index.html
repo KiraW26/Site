@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kira Wells — ИИ-креатор | Идеи, которые оживают</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0a0a0a;
+            --bg-card: #141414;
+            --text: #ffffff;
+            --text-muted: #888888;
+            --accent: #c8f31d;
+            --accent-dark: #a8d400;
+            --border: #2a2a2a;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Unbounded', cursive;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .animated-bg .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .animated-bg .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--accent);
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .animated-bg .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: #667eea;
+            top: 50%;
+            right: -50px;
+            animation-delay: -5s;
+        }
+
+        .animated-bg .orb-3 {
+            width: 350px;
+            height: 350px;
+            background: #764ba2;
+            bottom: -100px;
+            left: 30%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -50px) scale(1.1); }
+            50% { transform: translate(-30px, 30px) scale(0.9); }
+            75% { transform: translate(30px, 50px) scale(1.05); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 15px 40px;
+            background: rgba(10, 10, 10, 0.95);
+        }
+
+        .logo {
+            font-family: 'Unbounded', cursive;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            color: var(--accent);
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding: 120px 40px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 7rem);
+            margin-bottom: 30px;
+            letter-spacing: -2px;
+        }
+
+        .hero h1 .highlight {
+            color: var(--accent);
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero h1 .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: var(--accent);
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 50px;
+            font-weight: 300;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 18px 50px;
+            background: var(--accent);
+            color: var(--bg);
+            text-decoration: none;
+            border-radius: 100px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            background: var(--accent-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(200, 243, 29, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+            margin-left: 20px;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: none;
+        }
+
+        /* About Section */
+        .about {
+            padding: 150px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            margin-bottom: 30px;
+        }
+
+        .about-text p {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .about-text p strong {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .about-visual {
+            position: relative;
+        }
+
+        .about-visual .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-visual .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(200, 243, 29, 0.1) 0%, transparent 70%);
+        }
+
+        .about-visual .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        .about-visual .card p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 150px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 20px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(200, 243, 29, 0.1);
+        }
+
+        .service-card .icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(200, 243, 29, 0.1);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover .icon {
+            background: var(--accent);
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+        }
+
+        .service-card .price {
+            font-family: 'Unbounded', cursive;
+            font-size: 1.1rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .service-card .duration {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+
+        /* Portfolio Section */
+        .portfolio {
+            padding: 150px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .portfolio-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(200, 243, 29, 0.1);
+        }
+
+        .portfolio-item .media {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-item video,
+        .portfolio-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            pointer-events: none;
+            transition: transform 0.5s ease;
+        }
+
+        .portfolio-item:hover video,
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-item .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 10, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .portfolio-item:hover .overlay {
+            opacity: 1;
+        }
+
+        .portfolio-item .overlay span {
+            color: var(--accent);
+            font-family: 'Unbounded', cursive;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .portfolio-item .info {
+            padding: 25px;
+        }
+
+        .portfolio-item .info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .portfolio-item .info p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Process Section */
+        .process {
+            padding: 150px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .step {
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-card);
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Unbounded', cursive;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 0 auto 30px;
+            transition: all 0.3s ease;
+        }
+
+        .step:hover .step-number {
+            background: var(--accent);
+            color: var(--bg);
+            transform: scale(1.1);
+        }
+
+        .step h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .step p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Why Me Section */
+        .why-me {
+            padding: 150px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .feature:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(200, 243, 29, 0.1);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(200, 243, 29, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature:hover .feature-icon {
+            background: var(--accent);
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .feature h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 150px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            position: relative;
+        }
+
+        .contact::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 400px;
+            background: radial-gradient(ellipse, rgba(200, 243, 29, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .contact h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .contact p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .contact-btn {
+            padding: 18px 40px;
+            background: var(--bg-card);
+            color: var(--text);
+            text-decoration: none;
+            border-radius: 100px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(200, 243, 29, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .contact-btn:hover::before {
+            left: 100%;
+        }
+
+        .contact-btn:hover {
+            background: var(--accent);
+            color: var(--bg);
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            position: relative;
+        }
+
+        .modal-content video,
+        .modal-content img {
+            width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: var(--accent);
+        }
+
+        .modal-info {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .modal-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .modal-info p {
+            color: var(--text-muted);
+        }
+
+        /* Scroll Animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-reveal-left.revealed {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scroll-reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-reveal-right.revealed {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scroll-reveal-scale {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-reveal-scale.revealed {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .services-grid,
+            .process-steps,
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            nav {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 100px 20px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .btn {
+                padding: 15px 30px;
+                font-size: 1rem;
+            }
+
+            .btn-outline {
+                margin-left: 0;
+                margin-top: 15px;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .services-grid,
+            .process-steps,
+            .features,
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about,
+            .services,
+            .portfolio,
+            .process,
+            .why-me,
+            .contact {
+                padding: 80px 0;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .hero-content {
+            animation: fadeInUp 1s ease;
+        }
+
+        .modal-content {
+            animation: scaleIn 0.3s ease;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <a href="#" class="logo">Kira Wells<span>.</span></a>
+        <ul class="nav-links">
+            <li><a href="#about">Обо мне</a></li>
+            <li><a href="#services">Услуги</a></li>
+            <li><a href="#portfolio">Портфолио</a></li>
+            <li><a href="#contact">Контакты</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>ИИ-креатор<br><span class="highlight">идеи, которые оживают</span></h1>
+            <p>Создаю рекламные ролики, видео-визитки и контент для маркетплейсов с помощью искусственного и естественного интеллекта.<br>Современный дизайн для брендов и людей.</p>
+            <a href="#contact" class="btn">Обсудить проект</a>
+            <a href="#portfolio" class="btn btn-outline">Смотреть работы</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text scroll-reveal-left">
+                    <h2>Привет! Я Кира</h2>
+                    <p>Делаю визуал для брендов и экспертов, который <strong>цепляет и продаёт</strong>. Без студийных ценников и месяцев ожидания.</p>
+                    <p>Я использую нейросети, но магия происходит не в кнопке «сгенерировать», а в голове. Я не делаю «нейро-шаблоны». Я придумываю концепции, которые бьют в цель и оживают на экране.</p>
+                    <p>В итоге — премиальный визуал, который продаёт, но без бюджета голливудского продакшна.</p>
+                </div>
+                <div class="about-visual scroll-reveal-right">
+                    <div class="card">
+                        <h3>Мой подход</h3>
+                        <p>Каждый проект — это не просто генерация контента, а продуманная концепция, которая работает на результат. ИИ — мой инструмент, но финальный результат — моя работа.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header scroll-reveal">
+                <h2>Что я делаю</h2>
+                <p>Полный цикл создания визуального контента для вашего бизнеса</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card scroll-reveal">
+                    <div class="icon">🎬</div>
+                    <h3>Рекламные ролики</h3>
+                    <p>Короткие видео для таргета и соцсетей</p>
+                    <div class="price">от 3 000 ₽</div>
+                    <div class="duration">2–4 дня</div>
+                </div>
+                <div class="service-card scroll-reveal">
+                    <div class="icon">👤</div>
+                    <h3>Видео-визитки</h3>
+                    <p>Презентация вас или вашего бренда</p>
+                    <div class="price">от 4 000 ₽</div>
+                    <div class="duration">3–4 дня</div>
+                </div>
+                <div class="service-card scroll-reveal">
+                    <div class="icon">📚</div>
+                    <h3>Обучающие видео</h3>
+                    <p>Уроки, инструкции, разборы</p>
+                    <div class="price">от 5 000 ₽</div>
+                    <div class="duration">3–5 дней</div>
+                </div>
+                <div class="service-card scroll-reveal">
+                    <div class="icon">🛍️</div>
+                    <h3>Карточки товаров</h3>
+                    <p>Для маркетплейсов (Wildberries, Ozon)</p>
+                    <div class="price">от 1 000 ₽</div>
+                    <div class="duration">1–2 дня</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio" id="portfolio">
+        <div class="container">
+            <div class="section-header scroll-reveal">
+                <h2>Мои работы</h2>
+                <p>Каждая работа — это продуманная концепция, а не шаблон</p>
+            </div>
+            <div class="portfolio-grid">
+                <!-- Видео -->
+                <div class="portfolio-item scroll-reveal" onclick="openModal('Video/0926.mp4', 'video', 'Рекламный ролик', 'Снят и смонтирован за 3 дня. Задача — показать преимущества продукта в коротком формате.')">
+                    <div class="media">
+                        <video muted>
+                            <source src="Video/0926.mp4" type="video/mp4">
+                        </video>
+                        <div class="overlay"><span>Смотреть</span></div>
+                    </div>
+                    <div class="info">
+                        <h3>Рекламный ролик</h3>
+                        <p>Создан и смонтирован за 1 день</p>
+                    </div>
+                </div>
+                <div class="portfolio-item scroll-reveal" onclick="openModal('Video/0923.mp4', 'video', 'Рекламный ролик', 'Создан и смонтирован за 1 день. Задача — привлечь внимание к акции.')">
+                    <div class="media">
+                        <video muted>
+                            <source src="Video/0923.mp4" type="video/mp4">
+                        </video>
+                        <div class="overlay"><span>Смотреть</span></div>
+                    </div>
+                    <div class="info">
+                        <h3>Рекламный ролик</h3>
+                        <p>Создан и смонтирован за 1 день</p>
+                    </div>
+                </div>
+                <!-- Карточки товаров -->
+                <div class="portfolio-item scroll-reveal" onclick="openModal('kartochki/Карточка товара_ Пляжный коврик.png', 'image', 'Карточка — Пляжный коврик', 'Дизайн карточки для маркетплейса. Сделано за 1 день.')">
+                    <div class="media">
+                        <img src="kartochki/Карточка товара_ Пляжный коврик.png" alt="Карточка товара - Пляжный коврик">
+                        <div class="overlay"><span>Подробнее</span></div>
+                    </div>
+                    <div class="info">
+                        <h3>Карточка — Пляжный коврик</h3>
+                        <p>Дизайн карточки. 1 день</p>
+                    </div>
+                </div>
+                <div class="portfolio-item scroll-reveal" onclick="openModal('kartochki/Карточка товара Термокружка.png', 'image', 'Карточка — Термокружка', 'Дизайн карточки для маркетплейса. Сделано за 1 день.')">
+                    <div class="media">
+                        <img src="kartochki/Карточка товара Термокружка.png" alt="Карточка товара - Термокружка">
+                        <div class="overlay"><span>Подробнее</span></div>
+                    </div>
+                    <div class="info">
+                        <h3>Карточка — Термокружка</h3>
+                        <p>Дизайн карточки. 1 день</p>
+                    </div>
+                </div>
+                <div class="portfolio-item scroll-reveal" onclick="openModal('kartochki/Карточка товара Сыворотки для лица.png', 'image', 'Карточка — Сыворотки для лица', 'Дизайн карточки для маркетплейса. Сделано за 1 день.')">
+                    <div class="media">
+                        <img src="kartochki/Карточка товара Сыворотки для лица.png" alt="Карточка товара - Сыворотки для лица">
+                        <div class="overlay"><span>Подробнее</span></div>
+                    </div>
+                    <div class="info">
+                        <h3>Карточка — Сыворотки для лица</h3>
+                        <p>Дизайн карточки. 1 день</p>
+                    </div>
+                </div>
+                <div class="portfolio-item scroll-reveal" onclick="openModal('kartochki/Карточка товара Складной ланч-бокс.png', 'image', 'Карточка — Складной ланч-бокс', 'Дизайн карточки для маркетплейса. Сделано за 1 день.')">
+                    <div class="media">
+                        <img src="kartochki/Карточка товара Складной ланч-бокс.png" alt="Карточка товара - Складной ланч-бокс">
+                        <div class="overlay"><span>Подробнее</span></div>
+                    </div>
+                    <div class="info">
+                        <h3>Карточка — Складной ланч-бокс</h3>
+                        <p>Дизайн карточки. 1 день</p>
+                    </div>
+                </div>
+                <!-- Обложки и баннеры -->
+                <div class="portfolio-item scroll-reveal" onclick="openModal('oblozhki_bannery/Шапка Мобильные (1) (1).jpg', 'image', 'Шапка профиля', 'Дизайн шапки для соцсетей. Сделано за 1 день.')">
+                    <div class="media">
+                        <img src="oblozhki_bannery/Шапка Мобильные (1) (1).jpg" alt="Шапка профиля">
+                        <div class="overlay"><span>Подробнее</span></div>
+                    </div>
+                    <div class="info">
+                        <h3>Шапка профиля</h3>
+                        <p>Дизайн шапки. 1 день</p>
+                    </div>
+                </div>
+                <div class="portfolio-item scroll-reveal" onclick="openModal('oblozhki_bannery/Шапка (1).jpg', 'image', 'Шапка профиля', 'Дизайн шапки для соцсетей. Сделано за 1 день.')">
+                    <div class="media">
+                        <img src="oblozhki_bannery/Шапка (1).jpg" alt="Шапка профиля">
+                        <div class="overlay"><span>Подробнее</span></div>
+                    </div>
+                    <div class="info">
+                        <h3>Шапка профиля</h3>
+                        <p>Дизайн шапки. 1 день</p>
+                    </div>
+                </div>
+                <div class="portfolio-item scroll-reveal" onclick="openModal('oblozhki_bannery/Коллаж_детейлинг.png', 'image', 'Коллаж-Детейлинг', 'Дизайн коллажа для соцсетей. Сделано за 1 день.')">
+                    <div class="media">
+                        <img src="oblozhki_bannery/Коллаж_детейлинг.png" alt="Коллаж-Детейлинг">
+                        <div class="overlay"><span>Подробнее</span></div>
+                    </div>
+                    <div class="info">
+                        <h3>Коллаж-Детейлинг</h3>
+                        <p>Дизайн коллажа. 1 день</p>
+                    </div>
+                </div>
+                <div class="portfolio-item scroll-reveal" onclick="openModal('oblozhki_bannery/Для сторис (1).jpg', 'image', 'Для сторис', 'Дизайн сторис для соцсетей. Сделано за 1 день.')">
+                    <div class="media">
+                        <img src="oblozhki_bannery/Для сторис (1).jpg" alt="Для сторис">
+                        <div class="overlay"><span>Подробнее</span></div>
+                    </div>
+                    <div class="info">
+                        <h3>Для сторис</h3>
+                        <p>Дизайн сторис. 1 день</p>
+                    </div>
+                </div>
+                <div class="portfolio-item scroll-reveal" onclick="openModal('oblozhki_bannery/Для Видео обложка (1).jpg', 'image', 'Обложка для видео', 'Дизайн обложки для видео. Сделано за 1 день.')">
+                    <div class="media">
+                        <img src="oblozhki_bannery/Для Видео обложка (1).jpg" alt="Обложка для видео">
+                        <div class="overlay"><span>Подробнее</span></div>
+                    </div>
+                    <div class="info">
+                        <h3>Обложка для видео</h3>
+                        <p>Дизайн обложки. 1 день</p>
+                    </div>
+                </div>
+                <div class="portfolio-item scroll-reveal" onclick="openModal('oblozhki_bannery/Баннер.png', 'image', 'Баннер', 'Дизайн баннера для соцсетей. Сделано за 1 день.')">
+                    <div class="media">
+                        <img src="oblozhki_bannery/Баннер.png" alt="Баннер">
+                        <div class="overlay"><span>Подробнее</span></div>
+                    </div>
+                    <div class="info">
+                        <h3>Баннер</h3>
+                        <p>Дизайн баннера. 1 день</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process">
+        <div class="container">
+            <div class="section-header scroll-reveal">
+                <h2>Как мы будем работать вместе</h2>
+                <p>Простой и понятный процесс от идеи до результата</p>
+            </div>
+            <div class="process-steps">
+                <div class="step scroll-reveal">
+                    <div class="step-number">01</div>
+                    <h3>Обсуждение</h3>
+                    <p>Вы рассказываете о задаче, я задаю дополнительные вопросы о бренде и предлагаю идеи</p>
+                </div>
+                <div class="step scroll-reveal">
+                    <div class="step-number">02</div>
+                    <h3>Концепция</h3>
+                    <p>Вы выбираете идею, я делаю пробный вариант</p>
+                </div>
+                <div class="step scroll-reveal">
+                    <div class="step-number">03</div>
+                    <h3>Правки</h3>
+                    <p>2 круга доработок, чтобы всё идеально сошлось</p>
+                </div>
+                <div class="step scroll-reveal">
+                    <div class="step-number">04</div>
+                    <h3>Результат</h3>
+                    <p>Вы получаете готовый контент</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Me Section -->
+    <section class="why-me">
+        <div class="container">
+            <div class="section-header scroll-reveal">
+                <h2>Почему выбирают меня</h2>
+                <p>Не просто исполнитель, а партнёр в создании контента</p>
+            </div>
+            <div class="features">
+                <div class="feature scroll-reveal">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Полный цикл</h3>
+                    <p>От идеи до монтажа</p>
+                </div>
+                <div class="feature scroll-reveal">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Быстро</h3>
+                    <p>Видео за 2–3 дня вместо 2 недель</p>
+                </div>
+                <div class="feature scroll-reveal">
+                    <div class="feature-icon">💰</div>
+                    <h3>Доступно</h3>
+                    <p>В 3 раза дешевле студии</p>
+                </div>
+                <div class="feature scroll-reveal">
+                    <div class="feature-icon">💡</div>
+                    <h3>С идеями</h3>
+                    <p>3 концепции на выбор, а не один шаблон</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="scroll-reveal">Давайте обсудим ваш проект</h2>
+            <p class="scroll-reveal">Расскажите о вашей задаче — я предложу решение и рассчитаю стоимость в течение дня.</p>
+            <div class="contact-buttons scroll-reveal">
+                <a href="#" class="contact-btn">Telegram</a>
+                <a href="#" class="contact-btn">WhatsApp</a>
+                <a href="#" class="contact-btn">Почта</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Kira Wells — ИИ-креатор. Идеи, которые оживают.</p>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal" id="modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div id="modal-media"></div>
+            <div class="modal-info">
+                <h3 id="modal-title"></h3>
+                <p id="modal-desc"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal functions
+        function openModal(src, type, title, desc) {
+            const modal = document.getElementById('modal');
+            const media = document.getElementById('modal-media');
+            const modalTitle = document.getElementById('modal-title');
+            const modalDesc = document.getElementById('modal-desc');
+
+            if (type === 'video') {
+                media.innerHTML = `<video controls autoplay><source src="${src}" type="video/mp4"></video>`;
+            } else {
+                media.innerHTML = `<img src="${src}" alt="${title}">`;
+            }
+
+            modalTitle.textContent = title;
+            modalDesc.textContent = desc;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            const modal = document.getElementById('modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            document.getElementById('modal-media').innerHTML = '';
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll reveal animations
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale');
+            
+            reveals.forEach(element => {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const revealPoint = 150;
+
+                if (elementTop < windowHeight - revealPoint) {
+                    element.classList.add('revealed');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+    </script>
+
+</body>
+</html>
